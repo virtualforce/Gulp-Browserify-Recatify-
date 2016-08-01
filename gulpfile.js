@@ -15,6 +15,7 @@ var config = {
 	paths: {
 		html: "./src/*.html",
 		js: "./src/**/*.js",
+		images: "./src/images/*",	
 		dist: "./dist",
 		css: [
 			'node_modules/bootstrap/dist/css/bootstrap.min.css',
@@ -51,8 +52,14 @@ gulp.task('css',function(){
 
 gulp.task('html',function(){
 	gulp.src(config.paths.html).
-		pipe(gulp.dest(config.paths.dist)).
-			pipe(connect.reload());
+		pipe(gulp.dest(config.paths.dist))
+		.pipe(connect.reload());
+});
+
+gulp.task('images',function(){
+	gulp.src(config.paths.images)
+		.pipe(gulp.dest(config.paths.dist + "/images"))
+		.pipe(connect.reload());
 });
 
 gulp.task('open',['connect'],function(){
@@ -70,4 +77,4 @@ gulp.task('watch',function(){
 	gulp.watch(config.paths.js,['js','linter']);
 });
 
-gulp.task('default',['html','js' , 'css' , 'linter' , 'open' , 'watch' ]);
+gulp.task('default',['html','js' , 'css' , 'images' , 'linter' , 'open' , 'watch' ]);
